@@ -36,20 +36,13 @@ test("Preload preloaded templates test", function() {
 
 module("Render");
 asyncTest("Function callback", function() {
-	expect(3);
-
-	var count = 1;
-
-	function done()
-	{
-		--count || start();
-	}
+	expect(4);
 
 	$("#tmpl1").Chevron("render", {place: "world"}, function(response){
 		ok(true, "Callback function was called");
 		equal(response, "Hello world!", "Template rendered correctly.");
-		equal(this.templatePath, "templates/tmpl1.mustache", "Template rendered correctly.");
-		equal(this.templateName, "tmpl1", "Template rendered correctly.");
-		done();
+		equal(this.templatePath, "templates/tmpl1.mustache", "Template path is correct.");
+		equal(this.templateName, "tmpl1", "Template name is correct.");
+		start();
 	});
 });
