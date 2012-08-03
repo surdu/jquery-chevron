@@ -22,13 +22,13 @@ Then, in order to render the template:
 ```js
 	$("#templateName").Chevron("render", {place: "world"}, function(result){
 		// do something with 'result'
-		// 'result' will contain the result of renderig the template
+		// 'result' will contain the result of rendering the template
 		// (in this case 'result' will contain: Hello world!)
 	});
 
 ```
 
-You can use any selector that will identify the template link. The above code can also be writen:
+You can use any selector that will identify the template link. The above code can also be written:
 
 ```js
 	$("link[rel=template]").Chevron("render", {place: "world"}, function(response){
@@ -49,8 +49,15 @@ When the template data needs to be ready before the render is called, you can ca
 		// do something when the template was succesfully preloaded
 	});
 
-As with the `render` method, you can use a selector to preload all the templates like so:
+If you want to preload all the templates in the current html page, Chevron provides you a shortcut:
+
+$.Chevron("preload", function(){
+	// do something when the templates are successfully preloaded
+});
+
+In order for this to work, all your templates link must have a `rel="template"` attribute. In other words, the above shortcut could also be written as:
 
 	$("link[rel=template]").Chevron("preload", function(){
 		// do something when the templates are succesfully preloaded
 	});
+
