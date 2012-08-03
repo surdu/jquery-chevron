@@ -14,28 +14,35 @@
 						type: "GET",
 						url: this.templatePath,
 						success: $.proxy( function(response){
+							// TODO: FIX ME
+							// this function is wrong
+							// this being async called, the way I attach the template data to the element is crap
+							// only the magic makes it work on Firefox and Chrome. Safari got it right in the tests, apparently
 							$(element).data("template", response);
-							
-							if (index == this.length - 1 && $.isFunction(callback))
-								callback.apply(this)
+
+							if (callback && index == this.length - 1 && $.isFunction(callback))
+								callback.call(this)
 															
 						}, this)
 					})
 				}
-				else if (index == this.length - 1 && $.isFunction(callback))
-					callback.apply(this)
+				else if (callback && index == this.length - 1 && $.isFunction(callback))
+					callback.call(this)
 					
 			}, this));
 		},
 		
 		render: function(data, callback)
 		{
+			if (typeof(callback) == "undefined")
+				throw new Error('Missing the callback attribute in Chevron render method');
+
 			return this.each(function(){
 				this.renderData = data;
 				this.callback = callback;
 				
 				this.templatePath = $(this).attr("href");
-				this.templateName = $(this).attr("id") || this.attr("data-templateName");
+				this.templateName = $(this).attr("id") || $(this).attr("data-templateName");
 				
 				if (!$(this).data("template"))
 				{
@@ -46,7 +53,7 @@
 					})
 				}
 				else
-					methods.invokeRender($(this).data("template"));
+					methods.invokeRender.call(this, $(this).data("template"));
 			});
 		},
 		
@@ -60,10 +67,10 @@
 			if (!$(this).data("template"))
 				$(this).data("template", response);
 			
-			result = methods.renderTemplate(response, this.renderData)
+			var result = methods.renderTemplate(response, this.renderData)
 			
 			if ($.isFunction(this.callback)){
-				this.callback.apply(this, [result])
+				this.callback.call(this, result)
 			}
 			else if (this.callback instanceof jQuery){
 				this.callback.html(result);
@@ -71,7 +78,7 @@
 			else if (typeof(this.callback) == "string")
 				$(this.callback).html(result);
 			else
-				$.error('Chevron render method received an unsuported callback type');
+				throw new Error('Chevron render method received an unsuported callback type');
 			}
 	}
 
@@ -86,9 +93,9 @@
 	    if (methods[method])
 	    	return methods[method].apply(self, Array.prototype.slice.call(arguments, 1));
 	   	else if (!method)
-	      	$.error('Chevron must receive a method to call as first argument');
+	   		throw new Error('Chevron must receive a method to call as first argument');
 	    else
-	      	$.error('Method ' +  method + ' does not exist on Chevron');
+	    	throw new Error('Method ' +  method + ' does not exist on Chevron');
 	}
 	
 })( jQuery );

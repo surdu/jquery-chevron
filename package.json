@@ -2,7 +2,7 @@
 	"name": "jquery-chevron",
 	"title": "jQuery Chevron",
 	"description": "A jQuery extension that wraps the mustache js templating functionality allowing you to store templates in separate files instead of embedding them in the html.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"homepage": "https://github.com/postal2600/jquery-chevron",
 	"author": {
 		"name": "Nicolae Surdu",
