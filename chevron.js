@@ -16,14 +16,14 @@
 					$.ajax({
 						type: "GET",
 						url: this.templatePath,
-						context: {element: element, callback: callback, self: this},
+						context: this,
 						success: function(response, status, request){
-							this.self._preloadCount ++;
+							this._preloadCount ++;
 							
-							$(this.element).data("template", response);
+							$(element).data("template", response);
 
-							if (this.callback && this.self._preloadCount == this.self.length && $.isFunction(this.callback))
-								this.callback.call(this.self)
+							if (callback && this._preloadCount == this.length && $.isFunction(callback))
+								callback.call(this)
 						}
 					})
 				}
