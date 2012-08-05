@@ -4,6 +4,9 @@
 		
 		preload: function(callback)
 		{
+			// will count how many templates where preloaded
+			this._preloadCount = 0;
+			
 			return this.each($.proxy(function(index, element){
 				this.templatePath = $(element).attr("href");
 				this.templateName = $(element).attr("id") || this.attr("data-templateName");
@@ -13,17 +16,15 @@
 					$.ajax({
 						type: "GET",
 						url: this.templatePath,
-						success: $.proxy( function(response){
-							// TODO: FIX ME
-							// this function is wrong
-							// this being async called, the way I attach the template data to the element is crap
-							// only the magic makes it work on Firefox and Chrome. Safari got it right in the tests, apparently
-							$(element).data("template", response);
+						context: {element: element, callback: callback, self: this},
+						success: function(response, status, request){
+							this.self._preloadCount ++;
+							
+							$(this.element).data("template", response);
 
-							if (callback && index == this.length - 1 && $.isFunction(callback))
-								callback.call(this)
-															
-						}, this)
+							if (this.callback && this.self._preloadCount == this.self.length && $.isFunction(this.callback))
+								this.callback.call(this.self)
+						}
 					})
 				}
 				else if (callback && index == this.length - 1 && $.isFunction(callback))
