@@ -21,10 +21,8 @@
 		}
 	],
 	"dependencies": {
-		"mustache": "0.4.2"
 	},
 	"devDependencies": {
-		"qunitjs": "1.9.0"
 	},
 	"keywords": []
 }
