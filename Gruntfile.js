@@ -8,33 +8,31 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'chevron.min.js': ["chevron.js"]
+          'dist/chevron.min.js': ["src/chevron.js"]
         }
       }
     },
 
     jasmine: {
-      src: "utils.min.js",
-      options: {
-        specs: [
-          "specs/*-spec.js"
-        ],
-        vendor: "http://code.jquery.com/jquery-2.1.3.min.js"
-      }
-    }
-
-    watch: {
-      files: ["src/*.js", "specs/*-spec.js"],
-      tasks: "test",
-      options: {
-        debounceDelay: 1000,
+      jQuery2: {
+        src: "dist/chevron.min.js",
+        options: {
+          outfile: "specs/_SpecRunner.html",
+          specs: [
+            "specs/*-spec.js",
+          ],
+          template: "specs/runner.tmpl",
+          vendor: [
+            "http://code.jquery.com/jquery-2.1.3.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"
+          ]
+        }
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask("default", ["uglify", "jasmine"]);
+  grunt.registerTask("test", ["uglify", "jasmine"]);
 };

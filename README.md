@@ -1,4 +1,4 @@
-# About
+# jQuery Chevron [![Build Status](https://travis-ci.org/surdu/jquery-chevron.svg?branch=master)](https://travis-ci.org/surdu/jquery-chevron)
 
 jQuery Chevron is a jQuery extension that wraps the mustache js templating functionality allowing you to store templates in separate files instead of embedding them in the html.
 
@@ -46,7 +46,7 @@ When the template data needs to be ready before the render is called, you can ca
 		// do something when all the specified templates are successfully preloaded
 	});
 
-As with the `render` method, you can use any selector to identify the template or templates that need to be preloaded. 
+As with the `render` method, you can use any selector to identify the template or templates that need to be preloaded.
 
 
 If you want to preload all the templates in the current html page, you could do the following:
@@ -85,7 +85,7 @@ or
 
     $("someSelector").Chevron(methodName, arg1, arg2, ... )
 
-The `methodName` could be one of the following: 
+The `methodName` could be one of the following:
 
 ### render(templateData, callback)
 
@@ -101,7 +101,7 @@ The method receives the following arguments:
 
 ### preload(callback)
 
-This method preloads all the templates specified by the selector so that when you will call `render` method in the future, all the templates area ready to render. Otherwise, when you call `render` for the first time, the render method will take care of preloading the template first. 
+This method preloads all the templates specified by the selector so that when you will call `render` method in the future, all the templates area ready to render. Otherwise, when you call `render` for the first time, the render method will take care of preloading the template first.
 
 If the method is called without the selector, all the templates specified by link tags with the attribute `rel="template"` will be preloaded.
 
@@ -115,6 +115,6 @@ The attributes are usually accessed on `this` inside callback functions. The Che
 
 ### templatePath
 Represents the path specified in the link's `href` attribute.
-	
+
 ### templateName
 Represents either the `id` or `data-templateName` attribute of the link element. The attributes will be checked in this order. This can be used to identify which template rendered in the case you select multiple templates to render at the same time and you've chosen a function as your callback.
